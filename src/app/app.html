@@ -1,0 +1,476 @@
+<!-- <router-outlet /> -->
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <title>État des Sommes Dues - Cameroun</title>
+</head>
+
+<body>
+  <div id="part1" class="informations" *ngIf="!recapVisible">
+    <!-- FORMULAIRE IDENTIFICATION -->
+    <form #monForm="ngForm" class="form-card">
+      <h2 class="center">
+        APPLICATION DE LA LOI N°98/015 DU 14 JUILLET 1998 / FRAIS D'INSPECTION
+        ET DE CONTROLE (FIEC)
+      </h2>
+      <div class="form-row">
+        <label for="recette">Nature de la recette :</label>
+        <input id="recette" [(ngModel)]="tableau1.recette" name="recette" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="societe">Nom ou Raison sociale :</label>
+        <input id="societe" [(ngModel)]="tableau1.societe" name="societe" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="contact">Adresses/Téléphones /email:</label>
+        <input id="contact" [(ngModel)]="tableau1.contact" name="contact" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="localisation">Localisation :</label>
+        <input id="localisation" [(ngModel)]="tableau1.localisation" name="localisation" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="activite">Activité(s) :</label>
+        <input id="activite" [(ngModel)]="tableau1.activite" name="activite" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="situation_classe">Situation administrative / Classe :</label>
+        <input id="situation_classe" [(ngModel)]="tableau1.situation_classe" name="situation" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="situation_ref">Situation administrative / Référence Arrêté/Décision :</label>
+        <input id="situation_ref" [(ngModel)]="tableau1.situation_ref" name="reference" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="niu">Numéro d’identifiant Unique (NIU) :</label>
+        <input id="niu" [(ngModel)]="tableau1.niu" name="niu" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="dateInspection">Date inspection :</label>
+        <input id="dateInspection" [(ngModel)]="tableau1.dateInspection" name="dateInspection" type="date" />
+      </div>
+      <div class="form-row">
+        <label for="agents">Agents assermentés :</label>
+        <input id="agents" [(ngModel)]="tableau1.agents" name="agents" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="rapport">Numéro du rapport d'inspection et date :</label>
+        <input id="rapport" [(ngModel)]="tableau1.rapport" name="rapport" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="superficie_occ">Superficie occupée :</label>
+        <input id="superficie_occ" [(ngModel)]="tableau1.superficie_occ" name="superficie" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="superficie_non_bat">Superficie bâtie :</label>
+        <input id="superficie_non_bat" [(ngModel)]="tableau1.superficie_non_bat" name="superficie" type="text" />
+      </div>
+      <!-- <div class="form-row">
+        <label for="nonBatie">Non bâtie :</label>
+        <input id="nonBatie" type="checkbox" [(ngModel)]="tableau1.nonBatie" name="nonBatie">
+      </div> -->
+      <div class="form-card-buttons">
+        <button type="button" (click)="remplirFormulaire(donneesTest)">Generer les données</button>
+        <button type="button" (click)="reinitialiserFormulaire()">Effacer</button>
+      </div>
+    </form>
+
+    <hr />
+    <h2>Taux du droit de visite d’appareils à pression à gaz (A)</h2>
+    <div class="form-row">
+      <label for="aPression">
+        <input id="aPression" type="checkbox" [(ngModel)]="aPression" (ngModelChange)="update_pression()" name="aPression" />
+        Avez-vous des appareils à pression ?
+      </label>
+    </div>
+    <div *ngIf="aPression">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Redevance</th>
+            <th>Nombre d’appareils</th>
+            <th>Pression PE (bars)</th>
+            <th>Frais</th>
+            <th>Majoration</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of gazRows; let i = index">
+            <td>{{row.capacite}}</td>
+            <td>
+              <input type="text" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateGazRow(i)"
+                name="gazquantite{{i}}" />
+            </td>
+            <td>
+              <input type="text" value="0" [(ngModel)]="row.pe" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+            </td>
+            <!-- <td><input type="text" [(ngModel)]="row.frais" (ngModelChange)="updateFrais(i)" name="frais{{i}}"></td> -->
+            <td>{{row.frais}}</td>
+            <td>{{row.majoration}}</td>
+            <td>{{row.total}}</td>
+          </tr>
+          <tr class="total">
+            <td colspan="4"><b>Total Gaz : </b></td>
+            <td colspan="2"><b> {{gazTotal}} FCFA</b></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <strong>Total Gaz : {{gazTotal}} FCFA</strong>
+
+      <div class="other-button form-card-buttons">
+        <button type="button" (click)="genererGazRows()">Générer les données Gaz</button>
+        <button type="button" (click)="reinitialiserGazRows()">Effacer Gaz</button>
+      </div>
+    </div>
+
+    <hr />
+    <h2>Taux du droit de visite d’appareils de vapeur d’eau : (B)</h2>
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Redevance</th>
+          <th>Nombre d´appareils</th>
+          <th>Frais</th>
+          <!-- <th>Total</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of vapeurRows; let i = index">
+          <td>{{row.categorie}}</td>
+          <td>
+            <input type="text" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateVapeurRow(i)"
+              name="vapeurquantite{{i}}" />
+          </td>
+          <td>{{row.frais}}</td>
+          <!-- <td>{{row.total}}</td> -->
+        </tr>
+        <tr class="total">
+            <td colspan="2"><b>Total Vapeur :</b></td>
+            <td style="text-align: center;" colspan="1"><b> {{vapeurTotal}} FCFA</b></td>
+          </tr>
+      </tbody>
+    </table>
+    <strong>Total Vapeur : {{vapeurTotal}} FCFA</strong>
+    <div class="other-button form-card-buttons">
+        <button type="button" (click)="genererVapeurRows()">Générer les données Vapeur</button>
+        <button type="button" (click)="reinitialiserVapeurRows()">Effacer Vapeur</button>
+      </div>
+
+    <br /><br />
+    <br /><br />
+    <!-- BOUTON POUR AFFICHER LE RECAPITULATIF -->
+      <div class="other-button form-card-buttons">
+        <button style="background: linear-gradient(90deg, #1dc571 70%, #4fd1c5 105%);" type="button" (click)="afficherRecap()">Previsualiser</button>
+      </div>  
+  </div>
+  
+  <!-- Bloc à imprimer/seulement dans le PDF : -->
+  <div id="part2" class="force-one-page recapitulatif" *ngIf="recapVisible">
+    <div class="header">
+      <div class="header-left">
+        REPUBLIQUE DU CAMEROUN<br />
+        <em>Paix-Travail-Patrie</em><br />
+        ----------------------- <br />
+        REGION DU LITTORAL<br />
+        ----------------------- <br />
+        DELEGATION REGIONALE DES MINES, DE<br />
+        L'INDUSTRIE ET DU DEVELOPPEMENT<br />
+        TECHNOLOGIQUE<br />
+        ----------------------- <br />
+        SERVICE REGIONAL DE L'INDUSTRIE,<br />
+        DUDEVELOPPEMENT TECHNOLOGIQUE ET DE LA<br />
+        PROPRIETE INDUSTRIELLE<br />
+        ----------------------- <br />
+        TEL : 233 44 29 20
+      </div>
+
+      <div class="header-right">
+        REPUBLIC OF CAMEROON<br />
+        <em>Peace-Work-Fatherland</em><br />
+        ----------------------- <br />
+        LITTORAL REGION<br />
+        ----------------------- <br />
+        REGIONAL DELEGATION OF MINES, INDUSTRY<br />
+        AND TECHNOLOGICAL DEVELOPMENT<br />
+        ----------------------- <br />
+        REGIONAL SERVICE OF INDUSTRY,<br />
+        TECHNOLOGICAL DEVELOPMENT AND<br />
+        INDUSTRIAL PROPERTY<br />
+        ----------------------- <br />
+        PHONE: 233 44 29 20
+      </div>
+    </div>
+
+    <div class="reference-line">
+      <span>Réf. : Dossier N°LT ....../19</span>
+      <span>Application de la loi n°98/020 du 24 décembre 1998</span>
+    </div>
+
+    <div class="title">ETAT DES SOMMES DUES N° ______/LT-AP- 24</div>
+
+    <div class="subtitle">
+      VISITE OU EPREUVE DES APPAREILS A PRESSION DE GAZ OU A VAPEUR D'EAU
+    </div>
+
+    <table style="display: none;" class="info-table">
+      <tr>
+        <td class="label">Nom ou raison sociale</td>
+        <td>{{tableau1.societe}}</td>
+        <td colspan="2">BP : 12695 Douala</td>
+      </tr>
+      <tr>
+        <td class="label">Localisation</td>
+        <td colspan="3">{{tableau1.localisation}}</td>
+      </tr>
+      <tr>
+        <td class="label">Activités</td>
+        <td colspan="3">{{tableau1.activite}}</td>
+      </tr>
+      <tr>
+        <td style="width: 25%;" class="label">Situation administrative</td>
+        <td style="width: 50%;">
+          {{tableau1.situation_ref}}
+        </td>
+        <td style="width: 12.5%;" class="label">Classe: </td>
+        <td style="width: 12.5%;">{{tableau1.situation_classe}}</td>
+      </tr>
+      <tr>
+        <td style="width: 25%;" class="label">Date de visite/Epreuve</td>
+        <td style="width: 50%;">{{tableau1.dateInspection}}</td>
+        <td style="width: 12.5%;" class="label">N° Rapport: </td>
+        <td style="width: 12.5%;">N°___{{tableau1.rapport}}</td>
+      </tr>
+      <tr>
+        <td class="label">Inspecteur(s)</td>
+        <td colspan="3">KEMENI RODRIGUE, BENA ALAIN</td>
+      </tr>
+    </table>
+
+    <!-- //Deuxième tableau récapitulatif des redevances -->
+    <table class="info-table">
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Nature de la recette</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.recette}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Nom ou raison sociale</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.societe}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Adresses/Téléphones/email</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.contact}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Localisation</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.localisation}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Activité(s)</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.activite}}</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="width: 50%;" colspan="2" class="label">Situation administrative</td>
+        <td class="label" style="font-weight:bold; width: 25%;">Classe</td>
+        <td class="label" style="font-weight:bold; width: 25%;">Référence Arrêté /Décision</td>
+      </tr>
+      <tr>
+        <td style="width: 25%;">{{tableau1.situation_classe}}</td>
+        <td style="width: 25%;">{{tableau1.situation_ref}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Numéro d’identifiant Unique (NIU)</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.niu}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Date d'inspection</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.dateInspection}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Agents Assermentés</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.agents}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2" class="label">Numéro du rapport d'inspection et date</td>
+        <td style="width: 50%;" colspan="2">{{tableau1.rapport}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" rowspan="2" colspan="2" class="label" style="font-size:1.1em;" rowspan="2">Superficie occupée</td>
+        <td style="font-weight:bold; width: 25%;">Appareil</td>
+        <td style="font-weight:bold;  width: 25%;">Non bâtie</td>
+      </tr>
+      <tr>
+        <td>{{tableau1.superficie_occ}}</td>
+        <td>{{tableau1.superficie_non_bat}}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" class="label" colspan="2">Avez-vous des appareils à pression ?</td>
+        <td style="width: 25%;" [ngClass]="{'selected': app_a_pression === 'Oui'}">
+          {{ app_a_pression === 'Oui' ? 'Oui' : '' }}
+        </td>
+        <td style="width: 25%;" [ngClass]="{'selected': app_a_pression === 'Non'}">
+          {{ app_a_pression === 'Non' ? 'Non' : '' }}
+        </td>
+      </tr>
+    </table>
+
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Description</th>
+          <th>PE</th>
+          <th>Redevance<br />Unitaire</th>
+          <th>Totale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ gazRows[0].quantite > 0 ? (gazRows[0].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">Appareil de capacité au plus égale à 30 litres</td>
+          <td>{{ gazRows[0].pe > 0 ? (gazRows[0].pe | number:'2.0-0') : '' }}</td>
+          <td class="right">{{gazRows[0].frais_hidden | number:'1.0-0' }}</td>
+          <td class="right">{{ gazRows[0].frais > 0 ? (gazRows[0].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ gazRows[1].quantite > 0 ? (gazRows[1].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">
+            Appareil de capacité comprise entre 30 et 100 litres
+          </td>
+          <td>{{ gazRows[1].pe > 0 ? (gazRows[1].pe | number:'2.0-0') : '' }}</td>
+          <td class="right">{{gazRows[1].frais_hidden | number:'1.0-0' }}</td>
+          <td>{{ gazRows[1].frais > 0 ? (gazRows[1].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td class="center">{{ gazRows[2].quantite > 0 ? (gazRows[2].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">
+            Appareil de capacité comprise entre 100 et 1000 litres
+          </td>
+          <td>{{ gazRows[2].pe > 0 ? (gazRows[2].pe | number:'2.0-0') : '' }}</td>
+          <td class="right">{{gazRows[2].frais_hidden | number:'1.0-0' }}</td>
+          <td class="right">{{ gazRows[2].frais > 0 ? (gazRows[2].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ gazRows[3].quantite > 0 ? (gazRows[3].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">
+            Appareil de capacité comprise entre 1000 et 3000 litres
+          </td>
+          <td>{{ gazRows[3].pe > 0 ? (gazRows[3].pe | number:'2.0-0') : '' }}</td>
+          <td class="right">{{gazRows[3].frais_hidden | number:'1.0-0' }}</td>
+          <td>{{ gazRows[3].frais > 0 ? (gazRows[3].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ gazRows[4].quantite > 0 ? (gazRows[4].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">Appareil de capacité supérieure à 3000 litres</td>
+          <td>{{ gazRows[4].pe > 0 ? (gazRows[4].pe | number:'2.0-0') : '' }}</td>
+          <td class="right">{{gazRows[4].frais_hidden | number:'1.0-0' }}</td>
+          <td>{{ gazRows[4].frais > 0 ? (gazRows[4].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ vapeurRows[0].quantite > 0 ? (vapeurRows[0].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">Chaudière de 1<sup>ère</sup> catégorie</td>
+          <td></td>
+          <td class="right">{{vapeurRows[0].frais_hidden | number:'1.0-0'}}</td>
+          <td>{{ vapeurRows[0].frais > 0 ? (vapeurRows[0].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ vapeurRows[1].quantite > 0 ? (vapeurRows[1].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">Chaudière de 2<sup>ème</sup> catégorie</td>
+          <td></td>
+          <td class="right">{{vapeurRows[1].frais_hidden | number:'1.0-0' }}</td>
+          <td>{{ vapeurRows[1].frais > 0 ? (vapeurRows[1].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+        <tr>
+          <td>{{ vapeurRows[2].quantite > 0 ? (vapeurRows[2].quantite | number:'2.0-0') : '' }}</td>
+          <td class="left">Chaudière de 3<sup>ème</sup> catégorie</td>
+          <td></td>
+          <td class="right">{{vapeurRows[2].frais_hidden | number:'1.0-0' }}</td>
+          <td>{{ vapeurRows[2].frais > 0 ? (vapeurRows[2].frais | number:'1.0-0':'de') : '' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="total-section">
+      <tr>
+        <td colspan="4">
+          Majoration de 50% pour pression d'épreuve supérieure à 25 bars
+        </td>
+        <td class="center">{{ majoration25bars() > 0 ? (majoration25bars() | number:'1.0-0':'de') : '' }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          Majoration de 100% pour pression d'épreuve supérieure à 250 bars
+        </td>
+        <td class="center">{{ majoration250bars() > 0 ? (majoration250bars() | number:'1.0-0':'de') : '' }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Total des redevances</td>
+        <td class="center">{{ totalRedevance() > 0 ? (totalRedevance() | number:'1.0-0':'de') : '' }}</td>
+      </tr>
+      <tr>
+        <td style="width: 40%;" colspan="2">{{getapp_a_gaz_30() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
+        <td style="width: 40%;" colspan="2">Dix (10) Appareil de 30 litres maximum</td>
+        <td style="width: 20%;" class="center" rowspan="2">{{ fraisEpreuve() > 0 ? (fraisEpreuve() | number:'1.0-0':'de') : '' }}</td>
+      </tr>
+      <tr>
+        <td style="width: 50%;" colspan="2">{{getapp_a_gaz_30() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
+        <td style="width: 50%;" colspan="2">Cinq (05) appareils de plus de 30 litres</td>
+      </tr>
+      <tr>
+        <td style="width: 80%;" colspan="4"><strong>TOTAL GENERAL</strong></td>
+        <td style="width: 20%;" class="center"><strong>{{ getTotalGeneral() > 0 ? (getTotalGeneral() | number:'1.0-0':'de') : '' }}</strong></td>
+      </tr>
+    </table>
+
+    <p style="font-size: 10px; margin: 20px 0">
+      <strong>
+        Arrêté le présent état à la somme de : 
+        {{ chiffresEnLettres(getTotalGeneral()) }} francs CFA
+      </strong>
+    </p>
+
+    <div class="signature-section">
+      <div class="signature-box">
+        <div>Le Délégué Régional</div>
+        <div class="signature-circle">
+          <div style="font-size: 6px">Cachet et<br />Signature</div>
+        </div>
+      </div>
+      <div class="signature-box">
+        <div>Le fonctionnaire ayant fait le contrôle</div>
+        <div class="signature-circle">
+          <div style="font-size: 6px">Cachet et<br />Signature</div>
+        </div>
+      </div>
+
+      <div class="signature-box">
+        <div>Fait à Douala, le 19/03/2024</div>
+        <div>Le Chef de Service Régional de l'Industrie</div>
+        <div class="signature-circle">
+          <div style="font-size: 6px">Cachet et<br />Signature</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Payable en espèces ou par virement bancaire auprès de l'Agent
+      Intermédiaire des Recettes de la<br />
+      Délégation Régionale des Mines, de l'Industrie et du Développement
+      Technologique du Littoral à
+    </div>
+  </div>
+  <!-- Bouton de téléchargement PDF -->
+    <div style="text-align: center; margin-top: 30px" *ngIf="recapVisible">
+      <button class="no-print edit" (click)="cacherRecap()">Modifier les données</button>
+      <button class="no-print" (click)="printFile()">
+        Télécharger ce document en PDF
+      </button>
+    </div>
+</body>
+
+</html>

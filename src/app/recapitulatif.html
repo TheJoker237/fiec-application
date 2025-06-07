@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>État des Sommes Dues - Cameroun</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            /* margin: 20px; */
+            background-color: white;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .header-left, .header-right {
+            width: 45%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 9px;
+            line-height: 1.2;
+        }
+        
+        .reference-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            font-size: 10px;
+        }
+        
+        .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin: 15px 0;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 9px;
+        }
+        
+        .info-table td {
+            border: 1px solid black;
+            padding: 3px;
+            vertical-align: top;
+        }
+        
+        .info-table .label {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            width: 20%;
+        }
+        
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 9px;
+        }
+        
+        .main-table th, .main-table td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .main-table tr .left{
+            text-align: left;
+        }
+        
+        .main-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .center {
+            text-align: center;
+        }
+        
+        .right {
+            text-align: right;
+        }
+        
+        .total-section {
+            margin: 15px 0;
+            font-size: 9px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+
+        .total-section {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+            margin: 15px 0;
+        }
+
+        .total-section td {
+            border: 1px solid #000;
+            padding: 4px;
+        }
+
+        .total-section .right {
+            text-align: right;
+        }
+        
+        .signature-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .signature-box {
+            width: 30%;
+            text-align: center;
+            font-size: 8px;
+        }
+
+        .signature-box > div{
+            margin-bottom: 20px;
+        }
+        
+        .signature-circle {
+            width: 80px;
+            height: 80px;
+            border: 2px solid black;
+            border-radius: 50%;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            text-align: center;
+        }
+        
+        .footer-note {
+            font-size: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .scanner-text {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 8px;
+            color: #666;
+        }
+
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        .force-one-page {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+        
+        @media print {
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="informations">
+    <div class="header">
+        <div class="header-left">
+            REPUBLIQUE DU CAMEROUN<br>
+            <em>Paix-Travail-Patrie</em><br>
+            ----------------------- <br>
+            REGION DU LITTORAL<br>
+            ----------------------- <br>
+            DELEGATION REGIONALE DES MINES, DE<br>
+            L'INDUSTRIE ET DU DEVELOPPEMENT<br>
+            TECHNOLOGIQUE<br>
+            ----------------------- <br>
+            SERVICE REGIONAL DE L'INDUSTRIE,<br>
+            DUDEVELOPPEMENT TECHNOLOGIQUE ET DE LA<br>
+            PROPRIETE INDUSTRIELLE<br>
+            ----------------------- <br>
+            TEL : 233 44 29 20
+        </div>
+        
+        <div class="header-right">
+            REPUBLIC OF CAMEROON<br>
+            <em>Peace-Work-Fatherland</em><br>
+            ----------------------- <br>
+            LITTORAL REGION<br>
+            ----------------------- <br>
+            REGIONAL DELEGATION OF MINES, INDUSTRY<br>
+            AND TECHNOLOGICAL DEVELOPMENT<br>
+            ----------------------- <br>
+            REGIONAL SERVICE OF INDUSTRY,<br>
+            TECHNOLOGICAL DEVELOPMENT AND<br>
+            INDUSTRIAL PROPERTY<br>
+            ----------------------- <br>
+            PHONE: 233 44 29 20
+        </div>
+    </div>
+    
+    <div class="reference-line">
+        <span>Réf. : Dossier N°LT ....../19</span>
+        <span>Application de la loi n°98/020 du 24 décembre 1998</span>
+    </div>
+    
+    <div class="title">ETAT DES SOMMES DUES N° ______/LT-AP- 24</div>
+    
+    <div class="subtitle">VISITE OU EPREUVE DES APPAREILS A PRESSION DE GAZ OU A VAPEUR D'EAU</div>
+    
+    <table class="info-table">
+        <tr>
+            <td class="label">Nom ou raison sociale</td>
+            <td>ELEGANCE PRESSING</td>
+            <td class="label">BP : 12695 Douala</td>
+        </tr>
+        <tr>
+            <td class="label">Localisation</td>
+            <td>Bonaberi, Arrondissement de Douala 4<sup>ème</sup></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="label">Activités</td>
+            <td>Pressing (lingerie industrielle)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="label">Situation administrative</td>
+            <td>Décision N°000047/MINMIDT/SG/DI/SDRI/<br>SIC/01 DU 15 FEV 2016</td>
+            <td class="label">Classe: 2<sup>ème</sup></td>
+        </tr>
+        <tr>
+            <td class="label">Date de visite/Epreuve</td>
+            <td>19/03/2024</td>
+            <td class="label">N° Rapport: N°___</td>
+        </tr>
+        <tr>
+            <td class="label">Inspecteur(s)</td>
+            <td>KEMENI RODRIGUE, BENA ALAIN</td>
+            <td></td>
+        </tr>
+    </table>
+    
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Description</th>
+                <th>PE</th>
+                <th>Redevance<br>Unitaire</th>
+                <th>Totale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td class="left">Appareil de capacité au plus égale à 30 litres</td>
+                <td></td>
+                <td class="right">400</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Appareil de capacité comprise entre 30 et 100 litres</td>
+                <td></td>
+                <td class="right">800</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="center">01</td>
+                <td class="left">Appareil de capacité comprise entre 100 et 1000 litres</td>
+                <td></td>
+                <td class="right">3 000</td>
+                <td class="right">3.000</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Appareil de capacité comprise entre 1000 et 3000 litres</td>
+                <td></td>
+                <td class="right">6 000</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Appareil de capacité supérieure à 3000 litres</td>
+                <td></td>
+                <td class="right">10 000</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Chaudière de 1<sup>ère</sup> catégorie</td>
+                <td></td>
+                <td class="right">40 000</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Chaudière de 2<sup>ème</sup> catégorie</td>
+                <td></td>
+                <td class="right">24 000</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="left">Chaudière de 3<sup>ème</sup> catégorie</td>
+                <td></td>
+                <td class="right">16 000</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="total-section">
+        <tr>
+            <td colspan="4">Majoration de 50% pour pression d'épreuve supérieure à 25 bars</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4">Majoration de 100% pour pression d'épreuve supérieure à 250 bars</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="4">Total des redevances</td>
+            <td class="center">3.000</td>
+        </tr>
+        <tr>
+            <td colspan="2">Frais d'épreuve ou de visite (10 000 F/Unité)</td>
+            <td colspan="2">Dix (10) Appareil de 30 litres maximum</td>
+            <td class="center" rowspan="2">10.000</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="2">Cinq (05) appareils de plus de 30 litres</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>TOTAL GENERAL</strong></td>
+            <td class="center"><strong>13.000</strong></td>
+        </tr>
+    </table>
+
+    <p style="font-size: 10px; margin: 20px 0;">
+        <strong>Arrêté le présent état à la somme de : Treize mille francs CFA</strong>
+    </p>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            <div>Le Délégué Régional</div>
+            <div class="signature-circle">
+                <div style="font-size: 6px;">Cachet et<br>Signature</div>
+            </div>
+        </div>
+        <div class="signature-box">
+            <div>Le fonctionnaire ayant fait le contrôle</div>
+            <div class="signature-circle">
+                <div style="font-size: 6px;">Cachet et<br>Signature</div>
+            </div>
+        </div>
+        
+        <div class="signature-box">
+            <div>Fait à Douala, le 19/03/2024</div>
+            <div>Le Chef de Service Régional de l'Industrie</div>
+            <div class="signature-circle">
+                <div style="font-size: 6px;">Cachet et<br>Signature</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-note">
+        Payable en espèces ou par virement bancaire auprès de l'Agent Intermédiaire des Recettes de la<br>
+        Délégation Régionale des Mines, de l'Industrie et du Développement Technologique du Littoral à
+    </div>
+
+    <!-- Bouton de téléchargement PDF -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="no-print edit">Modifier les données</button>
+        <button class="no-print" onclick="print()">Télécharger ce document en PDF</button>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function print() {
+            var element = document.body;
+            var opt = {
+                margin:       0,
+                filename:     'recapitulatif.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 3 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        };
+
+        function chiffresEnLettres(n) {
+            const unite = ["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf"];
+            const dizaine = ["dix","onze","douze","treize","quatorze","quinze","seize","dix-sept","dix-huit","dix-neuf"];
+            const dizaine2 = ["", "", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingt", "quatre-vingt"];
+
+            // Nettoyage de la chaîne
+            if (typeof n === "string") {
+                n = n.replace(/[.\s]/g, "");
+                n = parseInt(n, 10);
+            }
+            if (isNaN(n)) return "";
+
+            if (n < 0) return "moins " + chiffresEnLettres(-n);
+            if (n < 10) return unite[n];
+            if (n < 20) return dizaine[n-10];
+            if (n < 100) {
+                let t = Math.floor(n/10), u = n%10;
+                if (t === 7 || t === 9) {
+                    return dizaine2[t] + (u === 1 ? "-et-" : "-") + dizaine[u];
+                }
+                if (t === 8 && u === 0) return "quatre-vingts";
+                if (u === 1 && t !== 8) return dizaine2[t] + " et un";
+                return dizaine2[t] + (u ? "-" + unite[u] : "");
+            }
+            if (n < 200) return "cent" + (n > 100 ? " " + chiffresEnLettres(n-100) : "");
+            if (n < 1000) {
+                let c = Math.floor(n/100), r = n%100;
+                return unite[c] + " cent" + (c > 1 && r === 0 ? "s" : "") + (r ? " " + chiffresEnLettres(r) : "");
+            }
+            if (n < 2000) return "mille" + (n > 1000 ? " " + chiffresEnLettres(n-1000) : "");
+            if (n < 1000000) {
+                let m = Math.floor(n/1000), r = n%1000;
+                return (m > 1 ? chiffresEnLettres(m) + " mille" : "mille") + (r ? " " + chiffresEnLettres(r) : "");
+            }
+            if (n < 2000000) return "un million" + (n > 1000000 ? " " + chiffresEnLettres(n-1000000) : "");
+            if (n < 1000000000) {
+                let millions = Math.floor(n/1000000), reste = n%1000000;
+                return chiffresEnLettres(millions) + " millions" + (reste ? " " + chiffresEnLettres(reste) : "");
+            }
+            if (n === 1000000000) return "un milliard";
+            return n.toString(); // pour les nombres plus grands
+        }
+
+        // Exemples :
+        // console.log(chiffresEnLettres("13 000"));      // "treize mille"
+        // console.log(chiffresEnLettres(27000));         // "vingt-sept mille"
+        // console.log(chiffresEnLettres("99.600"));      // "quatre-vingt-dix-neuf mille six cents"
+        // console.log(chiffresEnLettres(999999999));     // "neuf cent quatre-vingt-dix-neuf millions neuf cent quatre-vingt-dix-neuf mille neuf cent quatre-vingt-dix-neuf"
+    </script>
+
+     </div>
+</body>
+</html>
