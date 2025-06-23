@@ -74,7 +74,7 @@
         <input id="nonBatie" type="checkbox" [(ngModel)]="tableau1.nonBatie" name="nonBatie">
       </div> -->
       <div class="form-card-buttons">
-        <button type="button" (click)="remplirFormulaire(donneesTest)">Generer les données</button>
+        <!-- <button type="button" (click)="remplirFormulaire(donneesTest)">Generer les données</button> -->
         <button type="button" (click)="reinitialiserFormulaire()">Effacer</button>
       </div>
     </form>
@@ -124,7 +124,7 @@
       <strong>Total Gaz : {{gazTotal}} FCFA</strong>
 
       <div class="other-button form-card-buttons">
-        <button type="button" (click)="genererGazRows()">Générer les données Gaz</button>
+        <!-- <button type="button" (click)="genererGazRows()">Générer les données Gaz</button> -->
         <button type="button" (click)="reinitialiserGazRows()">Effacer Gaz</button>
       </div>
     </div>
@@ -158,7 +158,7 @@
     </table>
     <strong>Total Vapeur : {{vapeurTotal}} FCFA</strong>
     <div class="other-button form-card-buttons">
-        <button type="button" (click)="genererVapeurRows()">Générer les données Vapeur</button>
+        <!-- <button type="button" (click)="genererVapeurRows()">Générer les données Vapeur</button> -->
         <button type="button" (click)="reinitialiserVapeurRows()">Effacer Vapeur</button>
       </div>
 
@@ -212,10 +212,25 @@
       <span>Application de la loi n°98/020 du 24 décembre 1998</span>
     </div>
 
-    <div class="title">ETAT DES SOMMES DUES N° ______/LT-AP- 24</div>
+    <!-- <div class="title">ETAT DES SOMMES DUES N° ______/LT-AP- 24</div>
 
     <div class="subtitle">
       VISITE OU EPREUVE DES APPAREILS A PRESSION DE GAZ OU A VAPEUR D'EAU
+    </div> -->
+
+    <div class="title-section" style="position: relative; margin-bottom: 20px;">
+      <div style="text-align: center;">
+        <div class="title">ETAT DES SOMMES DUES N° ______/LT-AP- 24</div>
+        <div class="subtitle">
+          VISITE OU EPREUVE DES APPAREILS A PRESSION DE GAZ OU A VAPEUR D'EAU
+        </div>
+      </div>
+      <div style="position: absolute; top: 0; right: 0;">
+        <!-- Section QRCode -->
+        <div id="qrcode-section">
+          <img src="assets/qr-code.png" alt="QR Code" style="width: 50px; height: 50px;" />
+        </div>
+      </div>
     </div>
 
     <table style="display: none;" class="info-table">
@@ -413,12 +428,12 @@
         <td class="center">{{ totalRedevance() > 0 ? (totalRedevance() | number:'1.0-0':'de') : '' }}</td>
       </tr>
       <tr>
-        <td style="width: 40%;" colspan="2">{{getapp_a_gaz_30() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
+        <td style="width: 40%;" colspan="2">{{getQuantiteGaz30OuMoins() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
         <td style="width: 40%;" colspan="2">Dix (10) Appareil de 30 litres maximum</td>
         <td style="width: 20%;" class="center" rowspan="2">{{ fraisEpreuve() > 0 ? (fraisEpreuve() | number:'1.0-0':'de') : '' }}</td>
       </tr>
       <tr>
-        <td style="width: 50%;" colspan="2">{{getapp_a_gaz_30() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
+        <td style="width: 50%;" colspan="2">{{getQuantiteGazPlusDe30() > 0 ? "Frais d'épreuve ou de visite (10 000 F/Unité)" : ""}}</td>
         <td style="width: 50%;" colspan="2">Cinq (05) appareils de plus de 30 litres</td>
       </tr>
       <tr>
@@ -437,26 +452,26 @@
     <div class="signature-section">
       <div class="signature-box">
         <div>Le Délégué Régional</div>
-        <div class="signature-circle">
+        <!-- <div class="signature-circle">
           <div style="font-size: 6px">Cachet et<br />Signature</div>
-        </div>
+        </div> -->
       </div>
       <div class="signature-box">
         <div>Le fonctionnaire ayant fait le contrôle</div>
-        <div class="signature-circle">
+        <!-- <div class="signature-circle">
           <div style="font-size: 6px">Cachet et<br />Signature</div>
-        </div>
+        </div> -->
       </div>
 
       <div class="signature-box">
         <div>Fait à Douala, le 19/03/2024</div>
         <div>Le Chef de Service Régional de l'Industrie</div>
-        <div class="signature-circle">
+        <!-- <div class="signature-circle">
           <div style="font-size: 6px">Cachet et<br />Signature</div>
-        </div>
+        </div> -->
       </div>
     </div>
-
+    <br><br><br><br><br>
     <div class="footer-note">
       Payable en espèces ou par virement bancaire auprès de l'Agent
       Intermédiaire des Recettes de la<br />

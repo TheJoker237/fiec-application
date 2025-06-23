@@ -215,18 +215,62 @@ export class AppComponent {
 
 
   app_a_gaz_30 : number = 0;
+  app_a_gaz_100 : number = 0;
+  app_a_gaz_1000 : number = 0;
+  app_a_gaz_3000 : number = 0;
   app_a_gaz_other : number = 0;
+  app_a_gaz_sup_30_total : number = 0;
   frais_visite: number = 0;
   app_a_pression: string = 'Non';
 
   // Calcul pour la ligne des frais
     updateFrais(i: number) {
       let row = this.gazRows[i];
-      if (i = 1) {row.frais = row.quantite * row.frais_hidden; this.app_a_gaz_30++;}
-      if (i = 2) {row.frais = row.quantite * row.frais_hidden; this.app_a_gaz_other++;}
-      if (i = 3) {row.frais = row.quantite * row.frais_hidden; this.app_a_gaz_other++;}
-      if (i = 4) {row.frais = row.quantite * row.frais_hidden; this.app_a_gaz_other++;}
-      if (i = 5) {row.frais = row.quantite * row.frais_hidden; this.app_a_gaz_other++;}
+      if (i = 1) {row.frais = row.quantite * row.frais_hidden; }
+      if (i = 2) {row.frais = row.quantite * row.frais_hidden; }
+      if (i = 3) {row.frais = row.quantite * row.frais_hidden; }
+      if (i = 4) {row.frais = row.quantite * row.frais_hidden; }
+      if (i = 5) {row.frais = row.quantite * row.frais_hidden; }
+    }
+
+
+
+    getQuantiteGaz30OuMoins(): number {
+      // On suppose que le premier élément correspond à <= 30L
+      this.app_a_gaz_30 = this.gazRows[0]?.quantite ? Number(this.gazRows[0].quantite) : 0;
+      return this.app_a_gaz_30;
+    }
+
+    getQuantiteGaz100OuMoins(): number {
+      // On suppose que le premier élément correspond à <= 30L
+      this.app_a_gaz_100 = this.gazRows[1]?.quantite ? Number(this.gazRows[1].quantite) : 0;
+      return this.app_a_gaz_100;
+    }
+
+    getQuantiteGaz1000OuMoins(): number {
+      // On suppose que le premier élément correspond à <= 30L
+      this.app_a_gaz_1000 = this.gazRows[2]?.quantite ? Number(this.gazRows[2].quantite) : 0;
+      return this.app_a_gaz_1000;
+    }
+
+    getQuantiteGaz3000OuMoins(): number {
+      // On suppose que le premier élément correspond à <= 30L
+      this.app_a_gaz_3000 = this.gazRows[3]?.quantite ? Number(this.gazRows[3].quantite) : 0;
+      return this.app_a_gaz_3000;
+    }
+
+    getQuantiteGaz3000OuPlus(): number {
+      // On suppose que le premier élément correspond à <= 30L
+      this.app_a_gaz_other = this.gazRows[4]?.quantite ? Number(this.gazRows[4].quantite) : 0;
+      return this.app_a_gaz_other;
+    }
+
+    getQuantiteGazPlusDe30(): number {
+      // On additionne les quantités des appareils > 30L (indices 1 à 4)
+      this.app_a_gaz_sup_30_total = this.gazRows
+        .slice(1)
+        .reduce((sum, row) => sum + (Number(row.quantite) || 0), 0);
+      return this.app_a_gaz_sup_30_total;
     }
 
     // Calcul pour la ligne gaz
@@ -237,7 +281,7 @@ export class AppComponent {
       row.majoration = 0;
       if (row.pe > 25 && row.pe <= 250) row.majoration = row.frais * 0.5;
       if (row.pe > 250) row.majoration = row.frais * 1.0;
-      row.total = row.quantite * (row.frais + row.majoration);
+      row.total = row.frais + row.majoration;
     }
 
     // Calcul pour la ligne vapeur
@@ -249,13 +293,45 @@ export class AppComponent {
 
     fraisEpreuve(){
       this.frais_visite = 0;
+      this.getQuantiteGaz30OuMoins();
+      this.getQuantiteGaz100OuMoins();
+      this.getQuantiteGaz1000OuMoins();
+      this.getQuantiteGaz3000OuMoins();
+      this.getQuantiteGaz3000OuPlus();
+
       if (this.app_a_gaz_30 > 0 ) {
-        this.frais_visite += 10000;
-      } 
+        this.frais_visite += 10000 * ((this.app_a_gaz_30 - this.app_a_gaz_30%10) / 10);
+        if (this.app_a_gaz_30%10 > 0)
+          this.frais_visite += 10000;
+      }
+      if (this.app_a_gaz_100 > 0) {
+        this.frais_visite += 10000 * ((this.app_a_gaz_100 - this.app_a_gaz_100%5) / 5);
+        if (this.app_a_gaz_100%5 > 0)
+          this.frais_visite += 10000;
+      }
+      if (this.app_a_gaz_1000 > 0) {
+        this.frais_visite += 10000 * ((this.app_a_gaz_1000 - this.app_a_gaz_1000%5) / 5);
+        if (this.app_a_gaz_1000%5 > 0)
+          this.frais_visite += 10000;
+      }
+      if (this.app_a_gaz_3000 > 0) {
+        this.frais_visite += 10000 * ((this.app_a_gaz_3000 - this.app_a_gaz_3000%5) / 5);
+        if (this.app_a_gaz_3000%5 > 0)
+          this.frais_visite += 10000;
+      }
+      // Pour les appareils à gaz de capacité supérieure à 3000 litres
       if (this.app_a_gaz_other > 0) {
+      this.frais_visite += 10000 * ((this.app_a_gaz_other - this.app_a_gaz_other%5) / 5);
+      if (this.app_a_gaz_other%5 > 0)
         this.frais_visite += 10000;
       }
+
       console.log("Frais de visite: " + this.frais_visite);
+      console.log("app 30: " + this.app_a_gaz_30);
+      console.log("app 100: " + this.app_a_gaz_100);
+      console.log("app 1000: " + this.app_a_gaz_1000);
+      console.log("app 3000: " + this.app_a_gaz_3000);
+      console.log("app oth: " + this.app_a_gaz_other);
       return this.frais_visite;
     }
 
@@ -305,14 +381,6 @@ export class AppComponent {
       return this.totalRedevance() + this.fraisEpreuve();
     }
     
-    getapp_a_gaz_30() {
-      // Retourne le nombre d'appareils à gaz de capacité au plus égale 30 litres
-      return this.app_a_gaz_30;
-    }
-    getapp_a_gaz_other() {
-      // Retourne le nombre d'appareils à gaz de capacité supérieure à 30 litres
-      return this.app_a_gaz_other;
-    }
 
     // Afficher le récapitulatif
     afficherRecap() {
