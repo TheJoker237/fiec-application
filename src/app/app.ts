@@ -294,37 +294,46 @@ export class AppComponent {
     fraisEpreuve(){
       this.frais_visite = 0;
       this.getQuantiteGaz30OuMoins();
-      this.getQuantiteGaz100OuMoins();
-      this.getQuantiteGaz1000OuMoins();
-      this.getQuantiteGaz3000OuMoins();
-      this.getQuantiteGaz3000OuPlus();
+      this.getQuantiteGazPlusDe30();
+      // this.getQuantiteGaz100OuMoins();
+      // this.getQuantiteGaz1000OuMoins();
+      // this.getQuantiteGaz3000OuMoins();
+      // this.getQuantiteGaz3000OuPlus();
 
+      
       if (this.app_a_gaz_30 > 0 ) {
         this.frais_visite += 10000 * ((this.app_a_gaz_30 - this.app_a_gaz_30%10) / 10);
         if (this.app_a_gaz_30%10 > 0)
           this.frais_visite += 10000;
       }
-      if (this.app_a_gaz_100 > 0) {
-        this.frais_visite += 10000 * ((this.app_a_gaz_100 - this.app_a_gaz_100%5) / 5);
-        if (this.app_a_gaz_100%5 > 0)
+
+      if (this.app_a_gaz_sup_30_total > 0) {
+        this.frais_visite += 10000 * ((this.app_a_gaz_sup_30_total - this.app_a_gaz_sup_30_total%5) / 5);
+        if (this.app_a_gaz_sup_30_total%5 > 0)
           this.frais_visite += 10000;
       }
-      if (this.app_a_gaz_1000 > 0) {
-        this.frais_visite += 10000 * ((this.app_a_gaz_1000 - this.app_a_gaz_1000%5) / 5);
-        if (this.app_a_gaz_1000%5 > 0)
-          this.frais_visite += 10000;
-      }
-      if (this.app_a_gaz_3000 > 0) {
-        this.frais_visite += 10000 * ((this.app_a_gaz_3000 - this.app_a_gaz_3000%5) / 5);
-        if (this.app_a_gaz_3000%5 > 0)
-          this.frais_visite += 10000;
-      }
-      // Pour les appareils à gaz de capacité supérieure à 3000 litres
-      if (this.app_a_gaz_other > 0) {
-      this.frais_visite += 10000 * ((this.app_a_gaz_other - this.app_a_gaz_other%5) / 5);
-      if (this.app_a_gaz_other%5 > 0)
-        this.frais_visite += 10000;
-      }
+      
+      // if (this.app_a_gaz_100 > 0) {
+      //   this.frais_visite += 10000 * ((this.app_a_gaz_100 - this.app_a_gaz_100%5) / 5);
+      //   if (this.app_a_gaz_100%5 > 0)
+      //     this.frais_visite += 10000;
+      // }
+      // if (this.app_a_gaz_1000 > 0) {
+      //   this.frais_visite += 10000 * ((this.app_a_gaz_1000 - this.app_a_gaz_1000%5) / 5);
+      //   if (this.app_a_gaz_1000%5 > 0)
+      //     this.frais_visite += 10000;
+      // }
+      // if (this.app_a_gaz_3000 > 0) {
+      //   this.frais_visite += 10000 * ((this.app_a_gaz_3000 - this.app_a_gaz_3000%5) / 5);
+      //   if (this.app_a_gaz_3000%5 > 0)
+      //     this.frais_visite += 10000;
+      // }
+      // // Pour les appareils à gaz de capacité supérieure à 3000 litres
+      // if (this.app_a_gaz_other > 0) {
+      // this.frais_visite += 10000 * ((this.app_a_gaz_other - this.app_a_gaz_other%5) / 5);
+      // if (this.app_a_gaz_other%5 > 0)
+      //   this.frais_visite += 10000;
+      // }
 
       console.log("Frais de visite: " + this.frais_visite);
       console.log("app 30: " + this.app_a_gaz_30);
