@@ -372,8 +372,13 @@ export class AppComponent {
       let totalVapeur = this.vapeurTotal;
       let majoration25 = this.majoration25bars();
       let majoration250 = this.majoration250bars();
+      // console.log("Total Gaz: " + totalGaz);
+      // console.log("Total Vapeur: " + totalVapeur);
+      // console.log("Majoration 25 bars: " + majoration25);
+      // console.log("Majoration 250 bars: " + majoration250);
       // let fraisVisite = this.fraisEpreuve();
-      return totalGaz + totalVapeur + majoration25 + majoration250 ;
+      // return totalGaz + totalVapeur + majoration25 + majoration250 ;
+      return totalGaz + totalVapeur ;
     }
 
     getTotalGeneral() {
