@@ -48,28 +48,33 @@ export interface GazRow {
   quantite: number;
   frais: number;
   frais_hidden: number;
-  pe: number;
+  pe1: number;
+  pe2: number;
+  pe3: number;
   majoration: number;
+  majoration1: number;
+  majoration2: number;
+  majoration3: number;
   total: number;
 }
 
 // Valeurs par défaut pour réinitialiser le tableau gazRows
 const defaultGazRows: GazRow[] = [
-  { capacite: "Appareil de capacité au plus égale 30 litres : 400 FCFA", quantite: 0, frais: 0, frais_hidden: 400, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité comprise entre 30 et 100 litres : 800 FCFA", quantite: 0, frais: 0, frais_hidden: 800, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité comprise entre 100 et 1000 litres : 3000 FCFA", quantite: 0, frais: 0, frais_hidden: 3000, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité comprise entre 1000 et 3000 litres : 6000 FCFA", quantite: 0, frais: 0, frais_hidden: 6000, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité supérieure à 3000 litres : 10 000 FCFA", quantite: 0, frais: 0, frais_hidden: 10000, pe: 0, majoration: 0, total: 0 }
+  { capacite: "Appareil de capacité au plus égale 30 litres : 400 FCFA", quantite: 0, frais: 0, frais_hidden: 400, pe1: 0, pe2: 0, pe3: 0, majoration: 0, majoration1: 0, majoration2: 0, majoration3: 0, total: 0 },
+  { capacite: "Appareil de capacité comprise entre 30 et 100 litres : 800 FCFA", quantite: 0, frais: 0, frais_hidden: 800, pe1: 0, pe2: 0, pe3: 0, majoration: 0, majoration1: 0, majoration2: 0, majoration3: 0, total: 0 },
+  { capacite: "Appareil de capacité comprise entre 100 et 1000 litres : 3000 FCFA", quantite: 0, frais: 0, frais_hidden: 3000, pe1: 0, pe2: 0, pe3: 0, majoration: 0, majoration1: 0, majoration2: 0, majoration3: 0, total: 0 },
+  { capacite: "Appareil de capacité comprise entre 1000 et 3000 litres : 6000 FCFA", quantite: 0, frais: 0, frais_hidden: 6000, pe1: 0, pe2: 0, pe3: 0, majoration: 0, majoration1: 0, majoration2: 0, majoration3: 0, total: 0 },
+  { capacite: "Appareil de capacité supérieure à 3000 litres : 10 000 FCFA", quantite: 0, frais: 0, frais_hidden: 10000, pe1: 0, pe2: 0, pe3: 0, majoration: 0, majoration1: 0, majoration2: 0, majoration3: 0, total: 0 }
 ];
 
 // Exemple de données de test pour gazRows
-const testGazRows: GazRow[] = [
-  { capacite: "Appareil de capacité au plus égale 30 litres : 400 FCFA", quantite: 2, frais: 800, frais_hidden: 400, pe: 20, majoration: 0, total: 800 },
-  { capacite: "Appareil de capacité comprise entre 30 et 100 litres : 800 FCFA", quantite: 1, frais: 800, frais_hidden: 800, pe: 30, majoration: 400, total: 1200 },
-  { capacite: "Appareil de capacité comprise entre 100 et 1000 litres : 3000 FCFA", quantite: 0, frais: 0, frais_hidden: 3000, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité comprise entre 1000 et 3000 litres : 6000 FCFA", quantite: 0, frais: 0, frais_hidden: 6000, pe: 0, majoration: 0, total: 0 },
-  { capacite: "Appareil de capacité supérieure à 3000 litres : 10 000 FCFA", quantite: 0, frais: 0, frais_hidden: 10000, pe: 0, majoration: 0, total: 0 }
-];
+// const testGazRows: GazRow[] = [
+//   { capacite: "Appareil de capacité au plus égale 30 litres : 400 FCFA", quantite: 2, frais: 800, frais_hidden: 400, pe: 20, majoration: 0, total: 800 },
+//   { capacite: "Appareil de capacité comprise entre 30 et 100 litres : 800 FCFA", quantite: 1, frais: 800, frais_hidden: 800, pe: 30, majoration: 400, total: 1200 },
+//   { capacite: "Appareil de capacité comprise entre 100 et 1000 litres : 3000 FCFA", quantite: 0, frais: 0, frais_hidden: 3000, pe: 0, majoration: 0, total: 0 },
+//   { capacite: "Appareil de capacité comprise entre 1000 et 3000 litres : 6000 FCFA", quantite: 0, frais: 0, frais_hidden: 6000, pe: 0, majoration: 0, total: 0 },
+//   { capacite: "Appareil de capacité supérieure à 3000 litres : 10 000 FCFA", quantite: 0, frais: 0, frais_hidden: 10000, pe: 0, majoration: 0, total: 0 }
+// ];
 
 // Définition du type pour une ligne du tableau vapeur
 export interface VapeurRow {
@@ -279,8 +284,16 @@ export class AppComponent {
       let row = this.gazRows[i];
       // SI PE <= 25 bars, pas de majoration (PE: Pression d'épreuve max saisie par l'utilisateur)
       row.majoration = 0;
-      if (row.pe > 25 && row.pe <= 250) row.majoration = row.frais * 0.5;
-      if (row.pe > 250) row.majoration = row.frais * 1.0;
+      row.majoration1 = 0;
+      row.majoration2 = 0;
+      row.majoration3 = 0;
+      if (row.pe1 > 25 && row.pe1 <= 250) row.majoration1 = row.frais * 0.5;
+      if (row.pe1 > 250) row.majoration1 = row.frais * 1.0;
+      if (row.pe2 > 25 && row.pe2 <= 250) row.majoration2 = row.frais * 0.5;
+      if (row.pe2 > 250) row.majoration2 = row.frais * 1.0;
+      if (row.pe3 > 25 && row.pe3 <= 250) row.majoration3 = row.frais * 0.5;
+      if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
+      row.majoration = row.majoration1 + row.majoration2 + row.majoration3; 
       row.total = row.frais + row.majoration;
     }
 
@@ -337,10 +350,10 @@ export class AppComponent {
 
       console.log("Frais de visite: " + this.frais_visite);
       console.log("app 30: " + this.app_a_gaz_30);
-      console.log("app 100: " + this.app_a_gaz_100);
-      console.log("app 1000: " + this.app_a_gaz_1000);
-      console.log("app 3000: " + this.app_a_gaz_3000);
-      console.log("app oth: " + this.app_a_gaz_other);
+      // console.log("app 100: " + this.app_a_gaz_100);
+      // console.log("app 1000: " + this.app_a_gaz_1000);
+      // console.log("app 3000: " + this.app_a_gaz_3000);
+      console.log("app plus de 30: " + this.app_a_gaz_sup_30_total);
       return this.frais_visite;
     }
 
@@ -358,7 +371,7 @@ export class AppComponent {
       // Calculer la majoration pour les appareils à gaz
       let majoration = 0;
       for (let row of this.gazRows) {
-        if (row.pe > 25 && row.pe <= 250) {
+        if (row.pe1 > 25 && row.pe1 <= 250) {
           majoration += row.frais * 0.5; // 50% de majoration
         }
       }
@@ -368,7 +381,7 @@ export class AppComponent {
       // Calculer la majoration pour les appareils à gaz
       let majoration = 0;
       for (let row of this.gazRows) {
-        if (row.pe > 250) {
+        if (row.pe1 > 250) {
           majoration += row.frais * 1.0; // 100% de majoration
         }
       }
@@ -426,9 +439,9 @@ export class AppComponent {
   /**
    * Remplit le tableau gazRows avec des données de test
    */
-  genererGazRows() {
-    this.gazRows = testGazRows.map(row => ({ ...row }));
-  }
+  // genererGazRows() {
+  //   this.gazRows = testGazRows.map(row => ({ ...row }));
+  // }
 
   /**
    * Réinitialise le tableau gazRows à ses valeurs par défaut
