@@ -279,23 +279,81 @@ export class AppComponent {
     }
 
     // Calcul pour la ligne gaz
+    // updateGazRow(i: number) {
+    //   this.updateFrais(i);
+    //   let row = this.gazRows[i];
+    //   // SI PE <= 25 bars, pas de majoration (PE: Pression d'épreuve max saisie par l'utilisateur)
+    //   row.majoration = 0;
+    //   row.majoration1 = 0;
+    //   row.majoration2 = 0;
+    //   row.majoration3 = 0;
+    //   if (row.pe1 > 25 && row.pe1 <= 250) row.majoration1 = row.frais * 0.5;
+    //   if (row.pe1 > 250) row.majoration1 = row.frais * 1.0;
+    //   if (row.pe2 > 25 && row.pe2 <= 250) row.majoration2 = row.frais * 0.5;
+    //   if (row.pe2 > 250) row.majoration2 = row.frais * 1.0;
+    //   if (row.pe3 > 25 && row.pe3 <= 250) row.majoration3 = row.frais * 0.5;
+    //   if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
+    //   row.majoration = row.majoration1 + row.majoration2 + row.majoration3; 
+    //   row.total = row.frais + row.majoration;
+    // }
+
+
     updateGazRow(i: number) {
       this.updateFrais(i);
       let row = this.gazRows[i];
-      // SI PE <= 25 bars, pas de majoration (PE: Pression d'épreuve max saisie par l'utilisateur)
+
+      // // Controle des valeurs de pe1, pe2 et pe3
+      // if (!(row.pe1 > 25)) {
+      //   row.pe1 = 0;
+      // }
+      // if (!(row.pe2 > 26 && row.pe2 < 250)) {
+      //   row.pe2 = 0;
+      // }
+      // if (!(row.pe3 > 250)) {
+      //   row.pe3 = 0;
+      // }
+      
       row.majoration = 0;
       row.majoration1 = 0;
       row.majoration2 = 0;
       row.majoration3 = 0;
+
       if (row.pe1 > 25 && row.pe1 <= 250) row.majoration1 = row.frais * 0.5;
       if (row.pe1 > 250) row.majoration1 = row.frais * 1.0;
       if (row.pe2 > 25 && row.pe2 <= 250) row.majoration2 = row.frais * 0.5;
       if (row.pe2 > 250) row.majoration2 = row.frais * 1.0;
       if (row.pe3 > 25 && row.pe3 <= 250) row.majoration3 = row.frais * 0.5;
       if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
+
       row.majoration = row.majoration1 + row.majoration2 + row.majoration3; 
       row.total = row.frais + row.majoration;
     }
+
+    controlPe1(i: number) {
+      let row = this.gazRows[i];
+      if ((row.pe1 > 25)) {
+        console.log("PE1 is valid: " + row.pe1);
+        row.pe1 = 0;
+      }
+      this.updateGazRow(i);
+    }
+
+    controlPe2(i: number) {
+      let row = this.gazRows[i];
+      if ((row.pe2 < 26 || row.pe2 > 250)) {
+        row.pe2 = 0;
+      }
+      this.updateGazRow(i);
+    }
+
+    controlPe3(i: number) {
+      let row = this.gazRows[i];
+      if ((row.pe3 < 251)) {
+        row.pe3 = 0;
+      }
+      this.updateGazRow(i);
+    }
+
 
     // Calcul pour la ligne vapeur
     updateVapeurRow(i: number) {
@@ -434,6 +492,20 @@ export class AppComponent {
       pdf.save('recapitulatif.pdf');
     });
   }
+
+
+  getCurrentDateFormatted(): string {
+    const today = new Date();
+
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
+    const year = today.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
+
+// const currentDate = getCurrentDateFormatted();
+// console.log(currentDate); // Affiche par exemple "19/03/2024"
 
 
   /**

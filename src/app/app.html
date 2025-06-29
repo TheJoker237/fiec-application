@@ -93,9 +93,9 @@
           <tr>
             <th>Redevance</th>
             <th>Nombre d’appareils</th>
-            <th>Pression PE1 (bars)</th>
-            <th>Pression PE2 (bars)</th>
-            <th>Pression PE3 (bars)</th>
+            <th>PE <= 25 (bars)</th>
+            <th>25 < PE <= 250 (bars)</th>
+            <th>PE > 250 (bars)</th>
             <th>Frais</th>
             <th>Majoration</th>
             <th>Total</th>
@@ -109,13 +109,13 @@
                 name="gazquantite{{i}}" />
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe1" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+              <input type="text" value="0" [(ngModel)]="row.pe1" (ngModelChange)="updateGazRow(i)" (blur)="controlPe1(i)" name="pe1{{i}}" min="26"/>
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe2" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+              <input type="text" value="0" [(ngModel)]="row.pe2" (ngModelChange)="updateGazRow(i)" (blur)="controlPe2(i)" name="pe2{{i}}" min="26" max="249"/>
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe3" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+              <input type="text" value="0" [(ngModel)]="row.pe3" (ngModelChange)="updateGazRow(i)" (blur)="controlPe3(i)" name="pe3{{i}}" min="251"/>
             </td>
             <!-- <td><input type="text" [(ngModel)]="row.frais" (ngModelChange)="updateFrais(i)" name="frais{{i}}"></td> -->
             <td>{{row.frais}}</td>
@@ -347,9 +347,9 @@
         <tr>
           <th>Nombre</th>
           <th>Description</th>
-          <th>PE1</th>
-          <th>PE2</th>
-          <th>PE3</th>
+          <th>PE <= 25</th>
+          <th>25 < PE <= 250</th>
+          <th>PE > 250</th>
           <th>Redevance<br />Unitaire</th>
           <th>Totale</th>
         </tr>
@@ -468,7 +468,7 @@
       </tr>
     </table>
 
-    <p style="font-size: 10px; margin: 20px 0">
+    <p style="font-size: 10px; margin: 10px 0">
       <strong>
         Arrêté le présent état à la somme de : 
         {{ chiffresEnLettres(getTotalGeneral()) }} francs CFA
@@ -490,14 +490,14 @@
       </div>
 
       <div class="signature-box">
-        <div>Fait à Douala, le 19/03/2024</div>
+        <div>Fait à Douala, le {{getCurrentDateFormatted()}}</div>
         <div>Le Chef de Service Régional de l'Industrie</div>
         <!-- <div class="signature-circle">
           <div style="font-size: 6px">Cachet et<br />Signature</div>
         </div> -->
       </div>
     </div>
-    <br><br><br><br><br>
+    <br><br>
     <div class="footer-note">
       Payable en espèces ou par virement bancaire auprès de l'Agent
       Intermédiaire des Recettes de la<br />

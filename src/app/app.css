@@ -218,7 +218,7 @@ body {
     width: 45%;
     text-align: center;
     font-weight: bold;
-    font-size: 9px;
+    font-size: 7px;
     line-height: 1.2;
 }
 
@@ -322,7 +322,7 @@ body {
 }
 
 .signature-section {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -352,7 +352,7 @@ body {
 }
 
 .footer-note {
-    font-size: 8px;
+    font-size: 7px;
     text-align: center;
     margin-top: 20px;
     font-style: italic;
