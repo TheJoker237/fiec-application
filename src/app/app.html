@@ -93,7 +93,9 @@
           <tr>
             <th>Redevance</th>
             <th>Nombre d’appareils</th>
-            <th>Pression PE (bars)</th>
+            <th>Pression PE1 (bars)</th>
+            <th>Pression PE2 (bars)</th>
+            <th>Pression PE3 (bars)</th>
             <th>Frais</th>
             <th>Majoration</th>
             <th>Total</th>
@@ -107,7 +109,13 @@
                 name="gazquantite{{i}}" />
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+              <input type="text" value="0" [(ngModel)]="row.pe1" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+            </td>
+            <td>
+              <input type="text" value="0" [(ngModel)]="row.pe2" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
+            </td>
+            <td>
+              <input type="text" value="0" [(ngModel)]="row.pe3" (ngModelChange)="updateGazRow(i)" name="pe{{i}}" />
             </td>
             <!-- <td><input type="text" [(ngModel)]="row.frais" (ngModelChange)="updateFrais(i)" name="frais{{i}}"></td> -->
             <td>{{row.frais}}</td>
@@ -115,7 +123,7 @@
             <td>{{row.total}}</td>
           </tr>
           <tr class="total">
-            <td colspan="4"><b>Total Gaz : </b></td>
+            <td colspan="6"><b>Total Gaz : </b></td>
             <td colspan="2"><b> {{gazTotal}} FCFA</b></td>
           </tr>
         </tbody>
@@ -339,7 +347,9 @@
         <tr>
           <th>Nombre</th>
           <th>Description</th>
-          <th>PE</th>
+          <th>PE1</th>
+          <th>PE2</th>
+          <th>PE3</th>
           <th>Redevance<br />Unitaire</th>
           <th>Totale</th>
         </tr>
@@ -348,7 +358,9 @@
         <tr>
           <td>{{ gazRows[0].quantite > 0 ? (gazRows[0].quantite | number:'2.0-0') : '' }}</td>
           <td class="left">Appareil de capacité au plus égale à 30 litres</td>
-          <td>{{ gazRows[0].pe > 0 ? (gazRows[0].pe | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[0].pe1 > 0 ? (gazRows[0].pe1 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[0].pe2 > 0 ? (gazRows[0].pe2 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[0].pe3 > 0 ? (gazRows[0].pe3 | number:'2.0-0') : '' }}</td>
           <td class="right">{{gazRows[0].frais_hidden | number:'1.0-0' }}</td>
           <td class="right">{{ gazRows[0].frais > 0 ? (gazRows[0].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
@@ -357,7 +369,9 @@
           <td class="left">
             Appareil de capacité comprise entre 30 et 100 litres
           </td>
-          <td>{{ gazRows[1].pe > 0 ? (gazRows[1].pe | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[1].pe1 > 0 ? (gazRows[1].pe1 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[1].pe2 > 0 ? (gazRows[1].pe2 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[1].pe3 > 0 ? (gazRows[1].pe3 | number:'2.0-0') : '' }}</td>
           <td class="right">{{gazRows[1].frais_hidden | number:'1.0-0' }}</td>
           <td>{{ gazRows[1].frais > 0 ? (gazRows[1].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
@@ -366,7 +380,9 @@
           <td class="left">
             Appareil de capacité comprise entre 100 et 1000 litres
           </td>
-          <td>{{ gazRows[2].pe > 0 ? (gazRows[2].pe | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[2].pe1 > 0 ? (gazRows[2].pe1 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[2].pe2 > 0 ? (gazRows[2].pe2 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[2].pe3 > 0 ? (gazRows[2].pe3 | number:'2.0-0') : '' }}</td>
           <td class="right">{{gazRows[2].frais_hidden | number:'1.0-0' }}</td>
           <td class="right">{{ gazRows[2].frais > 0 ? (gazRows[2].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
@@ -375,20 +391,26 @@
           <td class="left">
             Appareil de capacité comprise entre 1000 et 3000 litres
           </td>
-          <td>{{ gazRows[3].pe > 0 ? (gazRows[3].pe | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[3].pe1 > 0 ? (gazRows[3].pe1 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[3].pe2 > 0 ? (gazRows[3].pe2 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[3].pe3 > 0 ? (gazRows[3].pe3 | number:'2.0-0') : '' }}</td>
           <td class="right">{{gazRows[3].frais_hidden | number:'1.0-0' }}</td>
           <td>{{ gazRows[3].frais > 0 ? (gazRows[3].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
         <tr>
           <td>{{ gazRows[4].quantite > 0 ? (gazRows[4].quantite | number:'2.0-0') : '' }}</td>
           <td class="left">Appareil de capacité supérieure à 3000 litres</td>
-          <td>{{ gazRows[4].pe > 0 ? (gazRows[4].pe | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[4].pe1 > 0 ? (gazRows[4].pe1 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[4].pe2 > 0 ? (gazRows[4].pe2 | number:'2.0-0') : '' }}</td>
+          <td>{{ gazRows[4].pe3 > 0 ? (gazRows[4].pe3 | number:'2.0-0') : '' }}</td>
           <td class="right">{{gazRows[4].frais_hidden | number:'1.0-0' }}</td>
           <td>{{ gazRows[4].frais > 0 ? (gazRows[4].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
         <tr>
           <td>{{ vapeurRows[0].quantite > 0 ? (vapeurRows[0].quantite | number:'2.0-0') : '' }}</td>
           <td class="left">Chaudière de 1<sup>ère</sup> catégorie</td>
+          <td></td>
+          <td></td>
           <td></td>
           <td class="right">{{vapeurRows[0].frais_hidden | number:'1.0-0'}}</td>
           <td>{{ vapeurRows[0].frais > 0 ? (vapeurRows[0].frais | number:'1.0-0':'de') : '' }}</td>
@@ -397,12 +419,16 @@
           <td>{{ vapeurRows[1].quantite > 0 ? (vapeurRows[1].quantite | number:'2.0-0') : '' }}</td>
           <td class="left">Chaudière de 2<sup>ème</sup> catégorie</td>
           <td></td>
+          <td></td>
+          <td></td>
           <td class="right">{{vapeurRows[1].frais_hidden | number:'1.0-0' }}</td>
           <td>{{ vapeurRows[1].frais > 0 ? (vapeurRows[1].frais | number:'1.0-0':'de') : '' }}</td>
         </tr>
         <tr>
           <td>{{ vapeurRows[2].quantite > 0 ? (vapeurRows[2].quantite | number:'2.0-0') : '' }}</td>
           <td class="left">Chaudière de 3<sup>ème</sup> catégorie</td>
+          <td></td>
+          <td></td>
           <td></td>
           <td class="right">{{vapeurRows[2].frais_hidden | number:'1.0-0' }}</td>
           <td>{{ vapeurRows[2].frais > 0 ? (vapeurRows[2].frais | number:'1.0-0':'de') : '' }}</td>
