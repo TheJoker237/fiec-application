@@ -327,8 +327,8 @@ export class AppComponent {
       // if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
 
       // if (row.pe1 > 0) row.majoration1 = row.frais * 0.5;
-      if (row.pe2 > 0) row.majoration2 = row.frais_hidden * 0.5;
-      if (row.pe3 > 0) row.majoration3 = row.frais_hidden * 1.0;
+      if (row.pe2 > 0) row.majoration2 = row.frais_hidden * row.pe2 * 0.5;
+      if (row.pe3 > 0) row.majoration3 = row.frais_hidden * row.pe3 * 1.0;
 
       row.majoration = row.majoration1 + row.majoration2 + row.majoration3;
       row.total = row.frais + row.majoration;
