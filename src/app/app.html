@@ -92,10 +92,10 @@
         <thead>
           <tr>
             <th>Redevance</th>
-            <th>Nombre d’appareils</th>
-            <th>PE <= 25 (bars)</th>
-            <th>25 < PE <= 250 (bars)</th>
-            <th>PE > 250 (bars)</th>
+            <th>Nombre Total d’appareils</th>
+            <th>Nb App : PE <= 25 (bars)</th>
+            <th>Nb App : 25 < PE <= 250 (bars)</th>
+            <th>Nb App : PE > 250 (bars)</th>
             <th>Frais</th>
             <th>Majoration</th>
             <th>Total</th>
@@ -105,17 +105,17 @@
           <tr *ngFor="let row of gazRows; let i = index">
             <td>{{row.capacite}}</td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateGazRow(i)"
-                name="gazquantite{{i}}" />
+              <input type="number" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateGazRow(i)"
+                name="gazquantite{{i}}" disabled/>
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe1" (ngModelChange)="updateGazRow(i)" (blur)="controlPe1(i)" name="pe1{{i}}" min="26"/>
+              <input type="number" value="0" [(ngModel)]="row.pe1" (ngModelChange)="updateGazRow(i)" name="pe1{{i}}" min="0"/>
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe2" (ngModelChange)="updateGazRow(i)" (blur)="controlPe2(i)" name="pe2{{i}}" min="26" max="249"/>
+              <input type="number" value="0" [(ngModel)]="row.pe2" (ngModelChange)="updateGazRow(i)" name="pe2{{i}}" min="0"/>
             </td>
             <td>
-              <input type="text" value="0" [(ngModel)]="row.pe3" (ngModelChange)="updateGazRow(i)" (blur)="controlPe3(i)" name="pe3{{i}}" min="251"/>
+              <input type="number" value="0" [(ngModel)]="row.pe3" (ngModelChange)="updateGazRow(i)" name="pe3{{i}}" min="0"/>
             </td>
             <!-- <td><input type="text" [(ngModel)]="row.frais" (ngModelChange)="updateFrais(i)" name="frais{{i}}"></td> -->
             <td>{{row.frais}}</td>
@@ -152,8 +152,8 @@
         <tr *ngFor="let row of vapeurRows; let i = index">
           <td>{{row.categorie}}</td>
           <td>
-            <input type="text" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateVapeurRow(i)"
-              name="vapeurquantite{{i}}" />
+            <input type="number" value="0" [(ngModel)]="row.quantite" (ngModelChange)="updateVapeurRow(i)"
+              name="vapeurquantite{{i}}" min="0"/>
           </td>
           <td>{{row.frais}}</td>
           <!-- <td>{{row.total}}</td> -->
@@ -345,13 +345,13 @@
     <table class="main-table">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Description</th>
-          <th>PE <= 25</th>
-          <th>25 < PE <= 250</th>
-          <th>PE > 250</th>
-          <th>Redevance<br />Unitaire</th>
-          <th>Totale</th>
+          <th style="width: 10%;">Nombre</th>
+          <th style="width: 40%;">Description</th>
+          <th style="width: 10%;">Nb App :<br> PE <= 25</th>
+          <th style="width: 10%;">Nb App :<br> 25 < PE <= 250</th>
+          <th style="width: 10%;">Nb App :<br> PE > 250</th>
+          <th style="width: 10%;">Redevance<br />Unitaire</th>
+          <th style="width: 10%;">Totale</th>
         </tr>
       </thead>
       <tbody>

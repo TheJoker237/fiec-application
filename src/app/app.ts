@@ -299,8 +299,9 @@ export class AppComponent {
 
 
     updateGazRow(i: number) {
-      this.updateFrais(i);
       let row = this.gazRows[i];
+      row.quantite = row.pe1 + row.pe2 + row.pe3;
+      this.updateFrais(i);
 
       // // Controle des valeurs de pe1, pe2 et pe3
       // if (!(row.pe1 > 25)) {
@@ -318,41 +319,47 @@ export class AppComponent {
       row.majoration2 = 0;
       row.majoration3 = 0;
 
-      if (row.pe1 > 25 && row.pe1 <= 250) row.majoration1 = row.frais * 0.5;
-      if (row.pe1 > 250) row.majoration1 = row.frais * 1.0;
-      if (row.pe2 > 25 && row.pe2 <= 250) row.majoration2 = row.frais * 0.5;
-      if (row.pe2 > 250) row.majoration2 = row.frais * 1.0;
-      if (row.pe3 > 25 && row.pe3 <= 250) row.majoration3 = row.frais * 0.5;
-      if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
+      // if (row.pe1 > 25 && row.pe1 <= 250) row.majoration1 = row.frais * 0.5;
+      // if (row.pe1 > 250) row.majoration1 = row.frais * 1.0;
+      // if (row.pe2 > 25 && row.pe2 <= 250) row.majoration2 = row.frais * 0.5;
+      // if (row.pe2 > 250) row.majoration2 = row.frais * 1.0;
+      // if (row.pe3 > 25 && row.pe3 <= 250) row.majoration3 = row.frais * 0.5;
+      // if (row.pe3 > 250) row.majoration3 = row.frais * 1.0;
 
-      row.majoration = row.majoration1 + row.majoration2 + row.majoration3; 
+      // if (row.pe1 > 0) row.majoration1 = row.frais * 0.5;
+      if (row.pe2 > 0) row.majoration2 = row.frais_hidden * 0.5;
+      if (row.pe3 > 0) row.majoration3 = row.frais_hidden * 1.0;
+
+      row.majoration = row.majoration1 + row.majoration2 + row.majoration3;
       row.total = row.frais + row.majoration;
     }
 
-    controlPe1(i: number) {
-      let row = this.gazRows[i];
-      if ((row.pe1 > 25)) {
-        console.log("PE1 is valid: " + row.pe1);
-        row.pe1 = 0;
-      }
-      this.updateGazRow(i);
-    }
 
-    controlPe2(i: number) {
-      let row = this.gazRows[i];
-      if ((row.pe2 < 26 || row.pe2 > 250)) {
-        row.pe2 = 0;
-      }
-      this.updateGazRow(i);
-    }
 
-    controlPe3(i: number) {
-      let row = this.gazRows[i];
-      if ((row.pe3 < 251)) {
-        row.pe3 = 0;
-      }
-      this.updateGazRow(i);
-    }
+    // controlPe1(i: number) {
+    //   let row = this.gazRows[i];
+    //   if ((row.pe1 > 25)) {
+    //     console.log("PE1 is valid: " + row.pe1);
+    //     row.pe1 = 0;
+    //   }
+    //   this.updateGazRow(i);
+    // }
+
+    // controlPe2(i: number) {
+    //   let row = this.gazRows[i];
+    //   if ((row.pe2 < 26 || row.pe2 > 250)) {
+    //     row.pe2 = 0;
+    //   }
+    //   this.updateGazRow(i);
+    // }
+
+    // controlPe3(i: number) {
+    //   let row = this.gazRows[i];
+    //   if ((row.pe3 < 251)) {
+    //     row.pe3 = 0;
+    //   }
+    //   this.updateGazRow(i);
+    // }
 
 
     // Calcul pour la ligne vapeur
@@ -425,12 +432,33 @@ export class AppComponent {
       }
     }
 
+    // majoration25bars() {
+    //   // Calculer la majoration pour les appareils à gaz
+    //   let majoration = 0;
+    //   for (let row of this.gazRows) {
+    //     if (row.pe1 > 25 && row.pe1 <= 250) {
+    //       majoration += row.frais * 0.5; // 50% de majoration
+    //     }
+    //   }
+    //   return majoration;
+    // }
+    // majoration250bars() {
+    //   // Calculer la majoration pour les appareils à gaz
+    //   let majoration = 0;
+    //   for (let row of this.gazRows) {
+    //     if (row.pe1 > 250) {
+    //       majoration += row.frais * 1.0; // 100% de majoration
+    //     }
+    //   }
+    //   return majoration;
+    // }
+
     majoration25bars() {
       // Calculer la majoration pour les appareils à gaz
       let majoration = 0;
       for (let row of this.gazRows) {
-        if (row.pe1 > 25 && row.pe1 <= 250) {
-          majoration += row.frais * 0.5; // 50% de majoration
+        if (row.majoration2 > 0) {
+          majoration += row.majoration2; // 50% de majoration
         }
       }
       return majoration;
@@ -439,8 +467,8 @@ export class AppComponent {
       // Calculer la majoration pour les appareils à gaz
       let majoration = 0;
       for (let row of this.gazRows) {
-        if (row.pe1 > 250) {
-          majoration += row.frais * 1.0; // 100% de majoration
+        if (row.majoration3 > 0) {
+          majoration += row.majoration3; // 100% de majoration
         }
       }
       return majoration;
