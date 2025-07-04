@@ -419,7 +419,7 @@ export class AppComponent {
       // console.log("app 1000: " + this.app_a_gaz_1000);
       // console.log("app 3000: " + this.app_a_gaz_3000);
       console.log("app plus de 30: " + this.app_a_gaz_sup_30_total);
-      return this.frais_visite;
+      return this.frais_visite + 10000;
     }
 
     update_pression(){
